@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('./static/images/backgroud.jpg');
+ /* Make sure the URL is correct */
+            background-size: cover; /* Ensure the image covers the entire viewport */
+            background-position: center; /* Center the image */
+            background-attachment: fixed; /* Fix the image in place while scrolling */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333; /* Default text color */
+        }
+        .container {
+            background-color: #ffffff; /* White background for contrast */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Slightly more pronounced shadow */
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            backdrop-filter: blur(10px); /* Add a blur effect to make text more readable */
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50; /* Darker color for better contrast */
+            font-size: 24px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #2c3e50; /* Consistent text color with heading */
+        }
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3498db; /* Primary button color */
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9; /* Darker shade on hover */
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ecf0f1; /* Light grey for result box */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50; /* Consistent text color */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Disease Prediction</h1>
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="disease">Select the Disease:</label>
+                <select id="disease" name="Disease" required>
+                    {% for disease in disease_names %}
+                        <option value="{{ disease }}">{{ disease }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fever">Are you suffering from fever?</label>
+                <select id="fever" name="Fever" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cough">Do you have a cough?</label>
+                <select id="cough" name="Cough" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fatigue">Are you feeling fatigued?</label>
+                <select id="fatigue" name="Fatigue" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="breathing">Are you experiencing difficulty breathing?</label>
+                <select id="breathing" name="Difficulty_Breathing" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Your Age:</label>
+                <input type="text" id="age" name="Age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="Gender" required>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bp">Blood Pressure Status:</label>
+                <select id="bp" name="Blood_Pressure" required>
+                    <option value="0">Low</option>
+                    <option value="1">Normal</option>
+                    <option value="2">High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cholesterol">Cholesterol Level Status:</label>
+                <select id="cholesterol" name="Cholesterol_Level" required>
+                    <option value="0">Low</option>
+                    <option value="1">Normal</option>
+                    <option value="2">High</option>
+                </select>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if prediction_result is not none %}
+            <div class="result">
+                Prediction Result: {{ prediction_result }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
